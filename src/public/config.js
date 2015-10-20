@@ -1,0 +1,1 @@
+export const blogUrl = 'http://es2015-in-action.avosapps.com'

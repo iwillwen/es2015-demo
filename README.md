@@ -1,0 +1,1 @@
+Cloud code project for blog-es2015-in-action. Cloud Code Guide: https://cn.avoscloud.com/docs/cloud_code_guide.html
