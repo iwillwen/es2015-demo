@@ -28629,7 +28629,7 @@ var _vue2 = _interopRequireDefault(_vue);
 
 var _config = require('../config');
 
-var duoshuoCode = '\n  <div class="ds-thread" data-thread-key="{{id}}" data-title="{{title}}" data-url="{{baseUrl}}/#!/post/{{id}}"></div>\n  <!-- 多说评论框 end -->\n  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->\n  <script type="text/javascript">\n    var duoshuoQuery = {short_name:"blog-es2015-in-action"};\n    (function() {\n      var ds = document.createElement(\'script\');\n      ds.type = \'text/javascript\';ds.async = true;\n      ds.src = (document.location.protocol == \'https:\' ? \'https:\' : \'http:\') + \'//static.duoshuo.com/embed.js\';\n      ds.charset = \'UTF-8\';\n      (document.getElementsByTagName(\'head\')[0] \n       || document.getElementsByTagName(\'body\')[0]).appendChild(ds);\n    })();\n  </script>\n';
+var duoshuoCode = '\n  <div class="ds-thread" data-thread-key="{{id}}" data-title="{{title}}" data-url="{{baseUrl}}/#!/post/{{id}}"></div>\n  <!-- 多说评论框 end -->\n  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->\n  <script type="text/javascript">\n  <!-- 多说公共JS代码 end -->\n';
 
 exports['default'] = _vue2['default'].component('duoshuo', {
   template: duoshuoCode,
@@ -28642,7 +28642,12 @@ exports['default'] = _vue2['default'].component('duoshuo', {
       id: this['post_id'],
       title: this['post_title']
     };
+  },
+
+  ready: function ready() {
+    DUOSHUO.EmbedThread(document.querySelector('.ds-thread'));
   }
+
 });
 module.exports = exports['default'];
 
@@ -28840,7 +28845,7 @@ exports['default'] = _asyncToGenerator(function* (ctx) {
 
       yield _min2['default'].sadd('posts:id', post.id);
       yield _min2['default'].hmset('post:' + post.id, post);
-      var postInfo = (yield ctx.jsonpHelper.load('http://api.duoshuo.com/threads/counts.jsonp?short_name=blog-es2015-in-action&threads=' + post.id + '&callback=jsonpcallback')).response[0];
+      var postInfo = (yield ctx.jsonpHelper.load('http://api.duoshuo.com/threads/counts.jsonp?short_name=es2015-in-action&threads=' + post.id + '&callback=jsonpcallback')).response[post.id];
       var comments = postInfo ? postInfo.comments : 0;
       yield _min2['default'].hset('post:' + post.id, 'comments', comments);
     }

@@ -54,7 +54,7 @@ export default async function handle(ctx) {
 
       await min.sadd('posts:id', post.id)
       await min.hmset(`post:${post.id}`, post)
-      let postInfo = (await ctx.jsonpHelper.load(`http://api.duoshuo.com/threads/counts.jsonp?short_name=blog-es2015-in-action&threads=${post.id}&callback=jsonpcallback`)).response[0]
+      let postInfo = (await ctx.jsonpHelper.load(`http://api.duoshuo.com/threads/counts.jsonp?short_name=es2015-in-action&threads=${post.id}&callback=jsonpcallback`)).response[post.id]
       let comments = postInfo ? postInfo.comments : 0
       await min.hset(`post:${post.id}`, 'comments', comments)
     }

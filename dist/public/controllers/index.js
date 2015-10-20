@@ -69,7 +69,7 @@ exports['default'] = _asyncToGenerator(function* (ctx) {
 
       yield _min2['default'].sadd('posts:id', post.id);
       yield _min2['default'].hmset('post:' + post.id, post);
-      var postInfo = (yield ctx.jsonpHelper.load('http://api.duoshuo.com/threads/counts.jsonp?short_name=blog-es2015-in-action&threads=' + post.id + '&callback=jsonpcallback')).response[0];
+      var postInfo = (yield ctx.jsonpHelper.load('http://api.duoshuo.com/threads/counts.jsonp?short_name=es2015-in-action&threads=' + post.id + '&callback=jsonpcallback')).response[post.id];
       var comments = postInfo ? postInfo.comments : 0;
       yield _min2['default'].hset('post:' + post.id, 'comments', comments);
     }
