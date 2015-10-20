@@ -7,7 +7,7 @@ const duoshuoCode = `
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">
-    var duoshuoQuery = {short_name:"blog-es2015-in-action"};
+    var duoshuoQuery = {short_name:"es2015-in-action"};
     (function() {
       var ds = document.createElement('script');
       ds.type = 'text/javascript';ds.async = true;
@@ -16,7 +16,8 @@ const duoshuoCode = `
       (document.getElementsByTagName('head')[0] 
        || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
-  </script>
+    </script>
+  <!-- 多说公共JS代码 end -->
 `
 
 export default Vue.component('duoshuo', {
