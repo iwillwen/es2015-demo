@@ -13,7 +13,7 @@ var _vue2 = _interopRequireDefault(_vue);
 require('../components/post');
 
 exports['default'] = function (ctx) {
-  ctx.layoutVM.$data.html = '\n    <div id="post">\n      <Post id="' + ctx.params.id + '"></Post>\n    </div>\n  ';
+  ctx.layoutVM.$data.html = '\n    <div id="post">\n      <post id="' + ctx.params.id + '"></post>\n    </div>\n  ';
 
   _vue2['default'].nextTick(function () {
     new _vue2['default']({

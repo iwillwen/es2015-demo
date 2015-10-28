@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import min from 'min'
 import marked from 'marked'
 
 import './duoshuo'
+
+import Posts from '../models/posts'
 
 const template = `
   <h1 v-text="title"></h1>
@@ -12,7 +13,6 @@ const template = `
 `
 
 let postVm = Vue.component('post', {
-
   template: template,
   replace: true,
   props: [ 'id' ],
@@ -27,7 +27,7 @@ let postVm = Vue.component('post', {
   },
 
   async created() {
-    let post = await min.hgetall(`post:${this.id}`)
+    let post = await Posts.getPost(this.id)
     post.loaded = true
     this.$data = post
   },

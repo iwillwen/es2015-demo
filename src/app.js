@@ -1,6 +1,6 @@
 import koa from 'koa'
 import path from 'path'
-import { bodyParser, router as Router } from 'koa-middlewares'
+import { bodyParser } from 'koa-middlewares'
 import Static from 'koa-static'
 
 import router from './routes'

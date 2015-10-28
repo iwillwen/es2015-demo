@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import min from 'min'
-import AV from 'avoscloud-sdk'
 import marked from 'marked'
 
-AV.initialize('1FyJrNv3YTh0gJgh1gmwfx1c', '9xkimPSEA880LJvNj3SmvrNx')
-
-let Post = AV.Object.extend('Posts')
+import Posts from '../models/posts'
 
 export default async function handle(ctx) {
   ctx.layoutVM.$data.html = `
@@ -42,30 +39,16 @@ export default async function handle(ctx) {
       },
 
       methods: {
-        submit(e) {
+        async submit(e) {
           e.preventDefault()
 
-          let post = new Post()
-          post.set('title', this.$data.title)
-          post.set('content', this.$data.content)
-          post.set('author', this.$data.author)
-          post.save(null, {
-            async success(_post) {
-              await min.sadd('posts:id', _post.id)
-              await min.hmset(`post:${_post.id}`, {
-                id: _post.id,
-                title: _post.get('title'),
-                content: _post.get('content'),
-                author: _post.get('author'),
-                comments: 0,
-                get summary() {
-                  return _post.get('content').substr(0, 20) + '...'
-                }
-              })
-
-              window.location.hash = `#!/post/${_post.id}`
-            }
+          var post = await Posts.publishPost({
+            title: this.$data.title,
+            content: this.$data.content,
+            author: this.$data.author
           })
+
+          window.location.hash = `#!/post/${post.id}`
         }
       },
 

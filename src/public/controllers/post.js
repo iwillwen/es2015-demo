@@ -5,7 +5,7 @@ import '../components/post'
 export default ctx => {
   ctx.layoutVM.$data.html = `
     <div id="post">
-      <Post id="${ctx.params.id}"></Post>
+      <post id="${ctx.params.id}"></post>
     </div>
   `
 

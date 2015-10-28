@@ -1,0 +1,10 @@
+{
+  "dbs": {
+    "mongo": "mongodb://u7cUGkp50XwoIq6f:pLTSDKEpbYFudh9o4@10.10.72.139/tuOBKQv9Lorw0e2l",
+    "redis": ""
+  },
+  "duoshuo": {
+    "short_name": "es2015-in-action",
+    "secret": "39971aca99f4859f848a469cfa2eb31c"
+  }
+}

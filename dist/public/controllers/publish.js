@@ -16,17 +16,13 @@ var _min = require('min');
 
 var _min2 = _interopRequireDefault(_min);
 
-var _avoscloudSdk = require('avoscloud-sdk');
-
-var _avoscloudSdk2 = _interopRequireDefault(_avoscloudSdk);
-
 var _marked = require('marked');
 
 var _marked2 = _interopRequireDefault(_marked);
 
-_avoscloudSdk2['default'].initialize('1FyJrNv3YTh0gJgh1gmwfx1c', '9xkimPSEA880LJvNj3SmvrNx');
+var _modelsPosts = require('../models/posts');
 
-var Post = _avoscloudSdk2['default'].Object.extend('Posts');
+var _modelsPosts2 = _interopRequireDefault(_modelsPosts);
 
 exports['default'] = _asyncToGenerator(function* (ctx) {
   ctx.layoutVM.$data.html = '\n    <form id="new-post" v-on="submit: submit">\n      <div class="form-group">\n        <label for="author">你的名字</label>\n        <input type="text" class="form-control" name="author" id="author" v-model="author" />\n      </div>\n      <div class="form-group">\n        <label for="title">标题</label>\n        <input type="text" class="form-control" name="title" id="title" v-model="title" />\n      </div>\n      <div class="form-group">\n        <label for="content">内容</label>\n        <div class="row">\n          <div class="col-md-6">\n            <textarea class="form-control" name="content" id="content" rows="10" v-model="content"></textarea>\n          </div>\n          <div class="col-md-6" v-html="content | marked"></div>\n        </div>\n      </div>\n      <button type="submit" class="btn btn-primary">提交</button>\n    </form>\n  ';
@@ -42,36 +38,17 @@ exports['default'] = _asyncToGenerator(function* (ctx) {
       },
 
       methods: {
-        submit: function submit(e) {
+        submit: _asyncToGenerator(function* (e) {
           e.preventDefault();
 
-          var post = new Post();
-          post.set('title', this.$data.title);
-          post.set('content', this.$data.content);
-          post.set('author', this.$data.author);
-          post.save(null, {
-            success: _asyncToGenerator(function* (_post) {
-              yield _min2['default'].sadd('posts:id', _post.id);
-              yield _min2['default'].hmset('post:' + _post.id, Object.defineProperties({
-                id: _post.id,
-                title: _post.get('title'),
-                content: _post.get('content'),
-                author: _post.get('author'),
-                comments: 0
-              }, {
-                summary: {
-                  get: function get() {
-                    return _post.get('content').substr(0, 20) + '...';
-                  },
-                  configurable: true,
-                  enumerable: true
-                }
-              }));
-
-              window.location.hash = '#!/post/' + _post.id;
-            })
+          var post = yield _modelsPosts2['default'].publishPost({
+            title: this.$data.title,
+            content: this.$data.content,
+            author: this.$data.author
           });
-        }
+
+          window.location.hash = '#!/post/' + post.id;
+        })
       },
 
       filters: {

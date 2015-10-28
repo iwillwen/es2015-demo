@@ -12,20 +12,19 @@ var _vue = require('vue');
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _min = require('min');
-
-var _min2 = _interopRequireDefault(_min);
-
 var _marked = require('marked');
 
 var _marked2 = _interopRequireDefault(_marked);
 
 require('./duoshuo');
 
+var _modelsPosts = require('../models/posts');
+
+var _modelsPosts2 = _interopRequireDefault(_modelsPosts);
+
 var template = '\n  <h1 v-text="title"></h1>\n  <small>由 {{author}} 发表</small>\n  <div class="post" v-html="content | marked"></div>\n  <duoshuo v-if="loaded" post_id="{{id}}" post_title="{{title}}"></duoshuo>\n';
 
 var postVm = _vue2['default'].component('post', {
-
   template: template,
   replace: true,
   props: ['id'],
@@ -40,7 +39,7 @@ var postVm = _vue2['default'].component('post', {
   },
 
   created: _asyncToGenerator(function* () {
-    var post = yield _min2['default'].hgetall('post:' + this.id);
+    var post = yield _modelsPosts2['default'].getPost(this.id);
     post.loaded = true;
     this.$data = post;
   }),
