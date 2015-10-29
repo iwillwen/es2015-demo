@@ -79,9 +79,11 @@ router.get.getPost = function* () {
 router.post.newPost = function* () {
   var data = this.request.body;
 
-  var reply = yield _modelsPosts2['default'].insert(data);
+  var post = yield _modelsPosts2['default'].insert(data);
 
-  this.body = reply;
+  this.body = {
+    post: post
+  };
 };
 
 exports['default'] = router;

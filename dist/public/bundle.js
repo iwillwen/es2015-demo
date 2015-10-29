@@ -18295,7 +18295,38 @@ var _fetchPost = _asyncToGenerator(function* (page) {
 });
 
 var getPost = _asyncToGenerator(function* (id) {
-  return yield _min2['default'].hgetall('post:' + id);
+  var existsInMinDB = yield _min2['default'].exists('post:' + id);
+
+  if (existsInMinDB) {
+    return yield _min2['default'].hgetall('post:' + id);
+  } else {
+    var _ret = yield* (function* () {
+      var res = yield fetch('/api/posts/' + id);
+      var post = (yield res.json()).post;
+
+      yield _min2['default'].hmset('post:' + id, Object.defineProperties({
+        id: post._id,
+        title: post.title,
+        content: post.content,
+        author: post.author,
+        comments: post.comments.length
+      }, {
+        summary: {
+          get: function get() {
+            return post.content.substr(0, 20) + '...';
+          },
+          configurable: true,
+          enumerable: true
+        }
+      }));
+
+      return {
+        v: post
+      };
+    })();
+
+    if (typeof _ret === 'object') return _ret.v;
+  }
 });
 
 var publishPost = _asyncToGenerator(function* (post) {
@@ -18307,7 +18338,7 @@ var publishPost = _asyncToGenerator(function* (post) {
     },
     body: JSON.stringify(post)
   });
-  var _post = yield res.json();
+  var _post = (yield res.json()).post;
 
   yield _min2['default'].sadd('posts:id', _post._id);
   yield _min2['default'].hmset('post:' + _post._id, Object.defineProperties({

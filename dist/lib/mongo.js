@@ -20,6 +20,12 @@ var _configJson2 = _interopRequireDefault(_configJson);
 
 var db = (0, _monk2['default'])(_configJson2['default'].dbs.mongo);
 
+/**
+ * 返回 MongoDB 中的 Collection 實例
+ * 
+ * @param  {String} name collection name
+ * @return {Object}      Collection
+ */
 function collection(name) {
   return (0, _coMonk2['default'])(db.get(name));
 }

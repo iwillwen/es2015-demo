@@ -44,7 +44,27 @@ async function _fetchPost(page) {
 }
 
 async function getPost(id) {
-  return await min.hgetall(`post:${id}`)
+  let existsInMinDB = await min.exists(`post:${id}`)
+
+  if (existsInMinDB) {
+    return await min.hgetall(`post:${id}`)
+  } else {
+    let res = await fetch(`/api/posts/${id}`)
+    let post = (await res.json()).post
+
+    await min.hmset(`post:${id}`, {
+      id: post._id,
+      title: post.title,
+      content: post.content,
+      author: post.author,
+      comments: post.comments.length,
+      get summary() {
+        return post.content.substr(0, 20) + '...'
+      }
+    })
+
+    return post
+  }
 }
 
 async function publishPost(post) {
@@ -56,7 +76,7 @@ async function publishPost(post) {
     },
     body: JSON.stringify(post)
   })
-  var _post = await res.json()
+  var _post = (await res.json()).post
 
   await min.sadd('posts:id', _post._id)
   await min.hmset(`post:${_post._id}`, {
