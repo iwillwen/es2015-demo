@@ -39,7 +39,8 @@ export default async function handle(ctx) {
                   <br />
                   感謝以下贊助商對本文的支持`,
         list: [
-          { title: 'DaoCloud', link: 'http://daocloud.io' }
+          { title: 'DaoCloud', link: 'http://daocloud.io' },
+          { title: '100Offer', link: 'http://100offer.com' }
         ]
       }
     })
