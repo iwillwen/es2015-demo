@@ -1,10 +1,8 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _thunkify = require('thunkify');
 
@@ -14,10 +12,12 @@ var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
 
-var _configJson = require('../../config.json');
+var _config = require('../../config.json');
 
-var requestAsync = (0, _thunkify2['default'])(function (opts, callback) {
-  (0, _request2['default'])(opts, function (err, res, body) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var requestAsync = (0, _thunkify2.default)(function (opts, callback) {
+  (0, _request2.default)(opts, function (err, res, body) {
     return callback(err, body);
   });
 });
@@ -54,8 +54,8 @@ router.post.postComment = function* () {
     json: true,
 
     body: {
-      short_name: _configJson.duoshuo.short_name,
-      secret: _configJson.duoshuo.secret,
+      short_name: _config.duoshuo.short_name,
+      secret: _config.duoshuo.secret,
       thread_key: postId,
       message: message
     }
@@ -66,5 +66,4 @@ router.post.postComment = function* () {
   };
 };
 
-exports['default'] = router;
-module.exports = exports['default'];
+exports.default = router;

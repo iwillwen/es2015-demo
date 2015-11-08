@@ -1,13 +1,12 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "Cloud codae project for blog-es2015-in-action. Cloud Code Guide: https://cn.avoscloud.com/docs/cloud_code_guide.html",
+  "description": "ES2015 DEMO",
   "main": "dist/server.js",
   "scripts": {
     "start": "node --harmony dist/app.js"
   },
   "keywords": [
-    "leancloud",
     "es6"
   ],
   "author": "iwillwen",
@@ -29,13 +28,13 @@
     "thunkify": "^2.1.2",
     "vue": "^0.12.16",
     "watchman-router": "^1.0.0",
-    "whatwg-fetch": "^0.10.0"
-  },
-  "devDependencies": {
-    "babelify": "^6.3.0",
+    "whatwg-fetch": "^0.10.0",
+    "babel-plugin-transform-async-to-generator": "^6.0.14",
+    "babel-preset-es2015-without-regenerator": "^1.0.1",
+    "babelify": "^7.2.0",
     "browserify": "^11.2.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.3.0",
+    "gulp-babel": "^6.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }
